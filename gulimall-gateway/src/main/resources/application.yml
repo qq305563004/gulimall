@@ -1,13 +1,14 @@
+##前端项目带前缀 /api
+##前端项目static目录中的index.js中
+## window.SITE_CONFIG['baseUrl'] = 'http://localhost:88/api';
 spring:
   cloud:
     gateway:
       routes:
-        - id: test_route
-          uri: https://www.baidu.com
+        - id: admin_route
+          uri: lb://renren-fast
           predicates:
-            - Query=uri,baidu
-#
-#        - id: qq_route
-#            uri: https://www.qq.com
-#            predicates:
-#              - Query=uri,qq
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
